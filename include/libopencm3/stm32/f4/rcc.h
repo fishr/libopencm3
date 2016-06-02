@@ -454,6 +454,14 @@
 #define RCC_BDCR_BDRST				(1 << 16)
 #define RCC_BDCR_RTCEN				(1 << 15)
 /* RCC_BDCR[9:8]: RTCSEL */
+#define RCC_BDCR_RTCSEL_NONE			(0 << 8)
+#define RCC_BDCR_RTCSEL_LSE			(1 << 8)
+#define RCC_BDCR_RTCSEL_LSI			(2 << 8)
+#define RCC_BDCR_RTCSEL_HSEDIV			(3 << 8)
+#define RCC_BDCR_LSEMOD				(1 << 3)
+#define RCC_BDCR_LSEMOD_SHIFT			3
+#define RCC_BDCR_LSEMOD_LOW			0x0
+#define RCC_BDCR_LSEMOD_HIGH			0x1
 #define RCC_BDCR_LSEBYP				(1 << 2)
 #define RCC_BDCR_LSERDY				(1 << 1)
 #define RCC_BDCR_LSEON				(1 << 0)
@@ -860,6 +868,12 @@ void rcc_set_main_pll_hse(uint32_t pllm, uint32_t plln, uint32_t pllp,
 			  uint32_t pllq);
 uint32_t rcc_system_clock_source(void);
 void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock);
+
+void rcc_backup_domain_reset(void);
+void rcc_set_rtc_source(uint32_t rtc_sel);
+void rcc_set_lsemode(uint32_t mode);
+void rcc_rtc_clk_enable(void);
+void rcc_rtc_clk_disable(void);
 
 END_DECLS
 
