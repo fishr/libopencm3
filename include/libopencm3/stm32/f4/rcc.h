@@ -174,9 +174,10 @@
 
 /* SWS: System clock switch status */
 #define RCC_CFGR_SWS_SHIFT			2
-#define RCC_CFGR_SWS_HSI			0x0
-#define RCC_CFGR_SWS_HSE			0x1
-#define RCC_CFGR_SWS_PLL			0x2
+#define RCC_CFGR_SWS_HSI			(0x0 << RCC_CFGR_SWS_SHIFT)
+#define RCC_CFGR_SWS_HSE			(0x1 << RCC_CFGR_SWS_SHIFT)
+#define RCC_CFGR_SWS_PLL			(0x2 << RCC_CFGR_SWS_SHIFT)
+#define RCC_CFGR_SWS_PLL_R			(0x3 << RCC_CFGR_SWS_SHIFT)
 
 /* SW: System clock switch */
 #define RCC_CFGR_SW_SHIFT			0
