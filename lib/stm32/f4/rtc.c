@@ -79,6 +79,32 @@ void rtc_enable_wakeup_timer_interrupt(void)
 	RTC_CR |= RTC_CR_WUTIE;   /* Enable the interrupt */
 }
 
+void rtc_initialize(uint32_t sync, uint32_t async, uint32_t date, uint32_t time)
+{
+    /* unlock the rtc domain */
+    rtc_unlock();
+
+    /* set the INIT bit to freeze the RTC and allow for editing */
+    RTC_ISR |= RTC_ISR_INIT;
+    /* wait for previous to take effect */
+    while (!(RTC_ISR & RTC_ISR_INITF));
+
+    /* set the LSE raw prescaler and synchronous prescaler */
+    rtc_set_prescaler(sync, async);
+
+    /* load date and time registers */
+    RTC_DR = date;
+    RTC_TR = time;
+    /* set 24h time */
+    RTC_CR &= ~(RTC_CR_FMT);
+
+    /* end setup by clearing the init bit */
+    RTC_ISR &= ~(RTC_ISR_INIT);
+
+    /* lock it back up */
+    rtc_lock();
+}
+
 /*---------------------------------------------------------------------------*/
 /** @brief Disable the wakeup timer interrupt
     @warning You must unlock the registers before using this function

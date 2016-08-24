@@ -328,7 +328,6 @@ specific memorymap.h header before including this header file.*/
 BEGIN_DECLS
 
 void rtc_set_prescaler(uint32_t sync, uint32_t async);
-void rtc_initialize(uint32_t sync, uint32_t async, uint32_t bcd_date, uint32_t bcd_time);
 void rtc_wait_for_synchro(void);
 void rtc_lock(void);
 void rtc_unlock(void);
