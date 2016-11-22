@@ -760,4 +760,48 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	rcc_osc_off(RCC_HSI);
 }
 
+void rcc_backup_domain_reset(void)
+{
+	//2 methods of resetting backup domain
+	//software reset or power loss to both vdd and vbat
+	//rcc_bdcr claims to not be writeable after modifying
+	//until a reset has occured
+
+	//clears all RTC regs and RCC_BDCR
+	RCC_BDCR |= RCC_BDCR_BDRST;
+	RCC_BDCR &= ~(RCC_BDCR_BDRST);
+
+	//datasheet isn't clear if setting then clearing
+	//the bit is the proper procedure, but does
+	//say the bit is set /and/ cleared via software
+}
+
+void rcc_set_rtc_source(uint32_t rtc_sel)
+{
+	uint32_t reg32;
+
+	reg32 = RCC_BDCR;
+	reg32 &= ~(3<<8);
+	RCC_BDCR = (reg32 | rtc_sel);
+}
+
+void rcc_rtc_clk_enable(void)
+{
+	RCC_BDCR |= RCC_BDCR_RTCEN;
+}
+
+void rcc_rtc_clk_disable(void)
+{
+	RCC_BDCR &= ~(RCC_BDCR_RTCEN);
+}
+
+void rcc_set_lsemode(uint32_t mode)
+{
+	uint32_t reg32;
+
+	reg32 = RCC_BDCR;
+	reg32 &= ~(RCC_BDCR_LSEMOD);
+	RCC_BDCR = (reg32 | mode);
+}
+
 /**@}*/

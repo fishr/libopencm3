@@ -27,6 +27,16 @@
 
 #include <libopencm3/stm32/rtc.h>
 
+uint32_t rtc_get_bcd_date(void)
+{
+    return RTC_DR;
+}
+
+uint32_t rtc_get_bcd_time(void)
+{
+    return RTC_TR;
+}
+
 /*---------------------------------------------------------------------------*/
 /** @brief Set RTC prescalars.
 
