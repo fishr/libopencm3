@@ -106,6 +106,10 @@ void adc_power_on(uint32_t adc)
  */
 void adc_power_off_async(uint32_t adc)
 {
+	if (adc_is_power_off(adc)) {
+		return;
+	}
+
 	uint32_t checks = ADC_CR_ADSTART;
 	uint32_t stops = ADC_CR_ADSTP;
 #if defined (ADC_CR_JADSTART)
@@ -140,6 +144,37 @@ void adc_power_off(uint32_t adc)
 {
 	adc_power_off_async(adc);
 	while (!adc_is_power_off(adc));
+}
+
+/**
+ * Start the ADC calibration and immediately return.
+ * @sa adc_calibrate
+ * @sa adc_is_calibrating
+ * @param adc ADC Block register address base @ref adc_reg_base
+ */
+void adc_calibrate_async(uint32_t adc)
+{
+	ADC_CR(adc) = ADC_CR_ADCAL;
+}
+
+/**
+ * Is the ADC Calibrating?
+ * @param adc ADC Block register address base @ref adc_reg_base
+ * @return true if the adc is currently calibrating
+ */
+bool adc_is_calibrating(uint32_t adc)
+{
+	return (ADC_CR(adc) & ADC_CR_ADCAL);
+}
+
+/**
+ * Start ADC calibration and wait for it to finish
+ * @param adc ADC Block register address base @ref adc_reg_base
+ */
+void adc_calibrate(uint32_t adc)
+{
+	adc_calibrate_async(adc);
+	while (adc_is_calibrating(adc));
 }
 
 /**
@@ -354,3 +389,4 @@ void adc_start_conversion_regular(uint32_t adc)
 	while (ADC_CR(adc) & ADC_CR_ADSTART);
 }
 
+/**@}*/
