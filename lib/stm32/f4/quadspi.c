@@ -30,22 +30,22 @@ void quadspi_set_prescaler(uint8_t prescaler)
     QUADSPI_CR = reg;
 }
 
-inline void quadspi_disable(void)
+void quadspi_disable(void)
 {
     QUADSPI_CR &= ~(QUADSPI_CR_EN);
 }
 
-inline void quadspi_enable(void)
+void quadspi_enable(void)
 {
     QUADSPI_CR |= QUADSPI_CR_EN;
 }
 
-inline void quadspi_enable_dma(void)
+void quadspi_enable_dma(void)
 {
     QUADSPI_CR |= QUADSPI_CR_DMAEN;
 }
 
-inline void quadspi_disable_dma(void)
+void quadspi_disable_dma(void)
 {
     QUADSPI_CR &= ~(QUADSPI_CR_DMAEN);
 }
@@ -74,13 +74,13 @@ void quadspi_set_cs_high_cyc(uint8_t high_cycles)
     QUADSPI_DCR = reg;
 }
 
-inline void quadspi_clk_idle_high(void)
+void quadspi_clk_idle_high(void)
 {
     //Similar to spi mode 3
     QUADSPI_DCR |= QUADSPI_DCR_CKMODE;
 }
 
-inline void quadspi_clk_idle_low(void)
+void quadspi_clk_idle_low(void)
 {
     //Similar to spi mode 0
     QUADSPI_DCR &= ~(QUADSPI_DCR_CKMODE);
@@ -128,12 +128,12 @@ void quadspi_set_data_mode(uint8_t dmode)
 
 /*  disable/enable sending instruction field once
 */
-inline void quadspi_enable_instr_once(void)
+void quadspi_enable_instr_once(void)
 {
     QUADSPI_CCR |= QUADSPI_CCR_SIOO;
 }
 
-inline void quadspi_disable_instr_once(void)
+void quadspi_disable_instr_once(void)
 {
     QUADSPI_CCR &= ~(QUADSPI_CCR_SIOO);
 }
@@ -250,4 +250,9 @@ bool quadspi_is_busy(void)
 uint8_t quadspi_get_dummy_cycles(void)
 {
     return (uint8_t) (QUADSPI_CCR >> QUADSPI_CCR_DCYC_SHIFT) & QUADSPI_CCR_DCYC_MASK;
+}
+
+void quadspi_set_addr(uint32_t addr)
+{
+    QUADSPI_AR = addr;
 }

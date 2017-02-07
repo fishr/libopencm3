@@ -163,21 +163,21 @@
 
 
 void quadspi_set_prescaler(uint8_t prescaler);
-inline void quadspi_disable(void);
-inline void quadspi_enable(void);
-inline void quadspi_enable_dma(void);
-inline void quadspi_disable_dma(void);
+void quadspi_disable(void);
+void quadspi_enable(void);
+void quadspi_enable_dma(void);
+void quadspi_disable_dma(void);
 void quadspi_set_flash_size(uint8_t flash_size);
 void quadspi_set_cs_high_cyc(uint8_t high_cycles);
-inline void quadspi_clk_idle_high(void);
-inline void quadspi_clk_idle_low(void);
+void quadspi_clk_idle_high(void);
+void quadspi_clk_idle_low(void);
 void quadspi_set_instruction(uint8_t instr);
 void quadspi_set_inst_mode(uint8_t imode);
 void quadspi_set_addr_mode(uint8_t amode);
 void quadspi_set_alt_mode(uint8_t abmode);
 void quadspi_set_data_mode(uint8_t dmode);
-inline void quadspi_enable_instr_once(void);
-inline void quadspi_disable_instr_once(void);
+void quadspi_enable_instr_once(void);
+void quadspi_disable_instr_once(void);
 void quadspi_set_data_len(uint32_t data_len);
 void quadspi_send_word(uint32_t data);
 uint32_t quadspi_get_word(void);
@@ -191,7 +191,7 @@ void quadspi_set_dummy_cycles(uint8_t cycles);
 void quadspi_set_fifo_thresh(uint8_t thresh);
 bool quadspi_is_busy(void);
 uint8_t quadspi_get_dummy_cycles(void);
-
+void quadspi_set_addr(uint32_t addr);
 
 #endif //LIBOPENCM3_QUADSPI_H
 
