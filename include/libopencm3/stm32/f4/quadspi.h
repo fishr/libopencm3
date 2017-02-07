@@ -66,7 +66,6 @@
 /* bits 31:14 reserved */
 #define QUADSPI_SR_FLEVEL_MASK		0x3f
 #define QUADSPI_SR_FLEVEL_SHIFT		8
-
 /* bits 7:6 reserved */
 #define QUADSPI_SR_BUSY			(1 << 5)
 #define QUADSPI_SR_TOF			(1 << 4)
@@ -142,6 +141,8 @@
 
 /* QUADSPI data register */
 #define QUADSPI_DR			MMIO32(QUADSPI_BASE + 0x20U)
+/* HALF-WORD addressable version for fetching 2 bytes from the interface */
+#define QUADSPI_HALFWORD_DR			MMIO16(QUADSPI_BASE + 0x20U)
 /* BYTE addressable version for fetching bytes from the interface */
 #define QUADSPI_BYTE_DR			MMIO8(QUADSPI_BASE + 0x20U)
 
