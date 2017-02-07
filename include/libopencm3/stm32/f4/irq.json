@@ -90,7 +90,13 @@
         "sai1",
         "lcd_tft",
         "lcd_tft_err",
-        "dma2d"
+        "dma2d",
+        "sai2",
+        "quadspi",
+        "hdmi_cec",
+        "spdif_rx",
+        "fmpi2c1",
+        "fmpi2c1_er"
     ], 
     "partname_humanreadable": "STM32 F4 series", 
     "partname_doxygen": "STM32F4", 
