@@ -18,13 +18,6 @@
 
 #include <libopencm3/stm32/quadspi.h>
 
-quadspi_command(uint8_t instr, uint32_t addr, uint32_t alt, uint8_t dummy, uint8_t *data, uint32_t data_len)
-
-void quadspi_()
-{
-
-}
-
 /*  set clock prescaler
     note that the AHB clock is divided by prescaler + 1
     to obtain the quadspi clk frequency
@@ -37,22 +30,22 @@ void quadspi_set_prescaler(uint8_t prescaler)
     QUADSPI_CR = reg;
 }
 
-void inline quadspi_disable(void)
+inline void quadspi_disable(void)
 {
     QUADSPI_CR &= ~(QUADSPI_CR_EN);
 }
 
-void inline quadspi_enable(void)
+inline void quadspi_enable(void)
 {
     QUADSPI_CR |= QUADSPI_CR_EN;
 }
 
-void inline quadspi_enable_dma(void)
+inline void quadspi_enable_dma(void)
 {
     QUADSPI_CR |= QUADSPI_CR_DMAEN;
 }
 
-void inline quadspi_disable_dma(void)
+inline void quadspi_disable_dma(void)
 {
     QUADSPI_CR &= ~(QUADSPI_CR_DMAEN);
 }
@@ -81,13 +74,13 @@ void quadspi_set_cs_high_cyc(uint8_t high_cycles)
     QUADSPI_DCR = reg;
 }
 
-void inline quadspi_clk_idle_high(void)
+inline void quadspi_clk_idle_high(void)
 {
     //Similar to spi mode 3
     QUADSPI_DCR |= QUADSPI_DCR_CKMODE;
 }
 
-void inline quadspi_clk_idle_low(void)
+inline void quadspi_clk_idle_low(void)
 {
     //Similar to spi mode 0
     QUADSPI_DCR &= ~(QUADSPI_DCR_CKMODE);
@@ -105,15 +98,16 @@ void quadspi_set_instruction(uint8_t instr)
 void quadspi_set_inst_mode(uint8_t imode)
 {
     uint32_t reg = QUADSPI_CCR;
-    reg &= ~(QUADSPI_CCR__MASK << QUADSPI_CCR__SHIFT);
-    reg |= imode << QUADSPI_CCR__SHIFT;
+    reg &= ~(QUADSPI_CCR_IMODE_MASK << QUADSPI_CCR_IMODE_SHIFT);
+    reg |= imode << QUADSPI_CCR_IMODE_SHIFT;
     QUADSPI_CCR = reg;
 }
-void quadspi_set_addr_mode(uint8_t imode)
+
+void quadspi_set_addr_mode(uint8_t amode)
 {
     uint32_t reg = QUADSPI_CCR;
     reg &= ~(QUADSPI_CCR_ADMODE_MASK << QUADSPI_CCR_ADMODE_SHIFT);
-    reg |= imode << QUADSPI_CCR_ADMODE_SHIFT;
+    reg |= amode << QUADSPI_CCR_ADMODE_SHIFT;
     QUADSPI_CCR = reg;
 }
 void quadspi_set_alt_mode(uint8_t abmode)
@@ -134,12 +128,12 @@ void quadspi_set_data_mode(uint8_t dmode)
 
 /*  disable/enable sending instruction field once
 */
-void inline quadspi_enable_instr_once(void)
+inline void quadspi_enable_instr_once(void)
 {
     QUADSPI_CCR |= QUADSPI_CCR_SIOO;
 }
 
-void inline quadspi_disable_instr_once(void)
+inline void quadspi_disable_instr_once(void)
 {
     QUADSPI_CCR &= ~(QUADSPI_CCR_SIOO);
 }
@@ -170,19 +164,6 @@ void quadspi_send_byte(uint8_t data)
 uint8_t quadspi_get_byte(void)
 {
     return QUADSPI_BYTE_DR;
-}
-
-/*  set number of dummy cycles needed for quadspi device
-    0 indicates the phase is skipped
-    a value of 1-31 indicates that many CLK cycles will be sent
-    NOTE: dual or quad mode require at least one cycle
-*/
-void quadspi_set_dummy_cycles(uint8_t cycles)
-{
-    uint32_t reg = QUADSPI_CCR;
-    reg &= ~(QUADSPI_CCR_DCYC << QUADSPI_CCR_DCYC_SHIFT);
-    reg |= cycles << QUADSPI_CCR_DCYC_SHIFT;
-    QUADSPI_CCR = reg;
 }
 
 /*  set size of alt bytes to send
@@ -240,6 +221,10 @@ uint8_t quadspi_get_func_mode(void)
 In order to assure enough “turn-around” time for changing the data signals
 from output mode to input mode, there must be at least one dummy cycle when
 using dual or quad mode to receive data from the Flash memory.
+    Set number of dummy cycles needed for quadspi device
+    0 indicates the phase is skipped
+    a value of 1-31 indicates that many CLK cycles will be sent
+    NOTE: dual or quad mode require at least one cycle
 */
 void quadspi_set_dummy_cycles(uint8_t cycles)
 {
