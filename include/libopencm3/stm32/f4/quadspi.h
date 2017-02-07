@@ -20,6 +20,9 @@
  *
  */
 
+#ifndef LIBOPENCM3_QUADSPI_H
+#define LIBOPENCM3_QUADSPI_H
+
 #include <libopencm3/stm32/memorymap.h>
 
 /* QUADSPI Control register */
@@ -188,4 +191,7 @@ void quadspi_set_dummy_cycles(uint8_t cycles);
 void quadspi_set_fifo_thresh(uint8_t thresh);
 bool quadspi_is_busy(void);
 uint8_t quadspi_get_dummy_cycles(void);
+
+
+#endif //LIBOPENCM3_QUADSPI_H
 
