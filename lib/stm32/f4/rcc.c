@@ -760,7 +760,7 @@ void rcc_clock_setup_hse_3v3(const struct rcc_clock_scale *clock)
 	rcc_osc_off(RCC_HSI);
 }
 
-void rcc_backup_domain_reset(void)
+void rcc_backupdomain_reset(void)
 {
 	//2 methods of resetting backup domain
 	//software reset or power loss to both vdd and vbat
