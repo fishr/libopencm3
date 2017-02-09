@@ -167,6 +167,7 @@ typedef enum ccr_mode_t {
 void quadspi_set_prescaler(uint8_t prescaler);
 void quadspi_disable(void);
 void quadspi_enable(void);
+void quadspi_set_commconf(uint8_t fmode, ccr_mode_t imode, uint8_t instr, ccr_mode_t amode, uint8_t adsize, ccr_mode_t abmode, uint8_t absize, uint8_t dcyc, ccr_mode_t dmode);
 void quadspi_enable_dma(void);
 void quadspi_disable_dma(void);
 void quadspi_set_flash_size(uint8_t flash_size);

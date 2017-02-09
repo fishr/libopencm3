@@ -86,7 +86,7 @@ void quadspi_clk_idle_low(void)
     QUADSPI_DCR &= ~(QUADSPI_DCR_CKMODE);
 }
 
-void quadspi_set_commconf(uint8_t fmode, ccr_mode_t imode, uint8_t instr, ccr_mode_t amode, ccr_mode_t abmode, uint8_t absize, ccr_mode_t dbmode, uint8_t dcyc, ccr_mode_t dmode)
+void quadspi_set_commconf(uint8_t fmode, ccr_mode_t imode, uint8_t instr, ccr_mode_t amode, uint8_t adsize, ccr_mode_t abmode, uint8_t absize, uint8_t dcyc, ccr_mode_t dmode)
 {
     uint32_t reg = QUADSPI_CCR;
     /*
@@ -124,9 +124,6 @@ void quadspi_set_commconf(uint8_t fmode, ccr_mode_t imode, uint8_t instr, ccr_mo
     // Same as adsize
     reg &= ~(QUADSPI_CCR_ABSIZE_MASK << QUADSPI_CCR_ABSIZE_SHIFT);
     reg |= (absize & QUADSPI_CCR_ABSIZE_MASK) << QUADSPI_CCR_ABSIZE_SHIFT;
-
-    reg &= ~(QUADSPI_CCR_DBMODE_MASK << QUADSPI_CCR_DBMODE_SHIFT);
-    reg |= dbmode << QUADSPI_CCR_DBMODE_SHIFT;
 
 /* From the manual: p 325
 In order to assure enough “turn-around” time for changing the data signals
