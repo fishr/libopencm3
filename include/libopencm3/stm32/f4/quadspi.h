@@ -123,11 +123,13 @@
 #define QUADSPI_CCR_INST_MASK		0xff
 #define QUADSPI_CCR_INST_SHIFT		0
 
-/* MODE values */
-#define QUADSPI_CCR_MODE_NONE		0
-#define QUADSPI_CCR_MODE_1LINE		1
-#define QUADSPI_CCR_MODE_2LINE		2
-#define QUADSPI_CCR_MODE_4LINE		3
+typedef enum ccr_mode_t {
+    /* MODE values */
+    QUADSPI_CCR_MODE_NONE = 0,
+    QUADSPI_CCR_MODE_1LINE = 1,
+    QUADSPI_CCR_MODE_2LINE = 2,
+    QUADSPI_CCR_MODE_4LINE = 3,
+} ccr_mode_t;
 
 /* FMODE values */
 #define QUADSPI_CCR_FMODE_IWRITE	0
@@ -171,11 +173,6 @@ void quadspi_set_flash_size(uint8_t flash_size);
 void quadspi_set_cs_high_cyc(uint8_t high_cycles);
 void quadspi_clk_idle_high(void);
 void quadspi_clk_idle_low(void);
-void quadspi_set_instruction(uint8_t instr);
-void quadspi_set_inst_mode(uint8_t imode);
-void quadspi_set_addr_mode(uint8_t amode);
-void quadspi_set_alt_mode(uint8_t abmode);
-void quadspi_set_data_mode(uint8_t dmode);
 void quadspi_enable_instr_once(void);
 void quadspi_disable_instr_once(void);
 void quadspi_set_data_len(uint32_t data_len);
@@ -183,11 +180,7 @@ void quadspi_send_word(uint32_t data);
 uint32_t quadspi_get_word(void);
 void quadspi_send_byte(uint8_t data);
 uint8_t quadspi_get_byte(void);
-void quadspi_set_alt_bytes_size(uint8_t absize);
-void quadspi_set_addr_size(uint8_t adsize);
-void quadspi_set_func_mode(uint8_t fmode);
 uint8_t quadspi_get_func_mode(void);
-void quadspi_set_dummy_cycles(uint8_t cycles);
 void quadspi_set_fifo_thresh(uint8_t thresh);
 bool quadspi_is_busy(void);
 uint8_t quadspi_get_dummy_cycles(void);
